@@ -1,33 +1,34 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import yelp from '../api/yelp';
 import SearchBar from '../components/SearchBar';
+import useResult from '../hooks/useResult';
+import ResultsList from '../components/ResultsList';
 
 const HomeScreen=()=> {
   //chuỗi tìm kiếm
-  const [term,setTerm]=useState('');
-  //mảng kết quả
-  const [result,setResult]=useState([]);
+  const [term,setTerm]=useState(''); 
+  const [searchApi,result,errorMessage]=useResult();
 
-  //hàm tìm kiếm
-  const searchApi= async ()=>{
-    const response=await yelp.get('/search',{
-      params:{
-        limit:50,
-        term,//có thể ghi mỗi term vì tên nó giống nhau
-        location:'san jose'
-      }
+  const filterResultsByPrice=(price)=>{
+    //price === '$' || '$$' || '$$$'
+    return result.filter(result=>{
+      return result.price===price;
     });
-    setResult(response.data.businesses);
   };
   return (
     <View>
       <SearchBar 
         term={term} 
         onTermChange={newTerm=>setTerm(newTerm)}
-        onTermSubmit={searchApi}
+        onTermSubmit={()=>searchApi(term)}
       />
+      {
+        errorMessage?<Text>{errorMessage}</Text>:null
+      }
       <Text>We have found {result.length} results.</Text>
+      <ResultsList result={filterResultsByPrice('$')} title="Cost Effective"/>
+      <ResultsList result={filterResultsByPrice('$$')} title="Big Pricier"/>
+      <ResultsList result={filterResultsByPrice('$$$')} title="Big Spender"/>
     </View>
   );
 }
