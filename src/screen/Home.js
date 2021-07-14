@@ -17,8 +17,8 @@ const HomeScreen=()=> {
   };
   return (
     <View style={styles.contain}>
-      <SearchBar 
-        term={term} 
+      <SearchBar
+        term={term}
         onTermChange={newTerm=>setTerm(newTerm)}
         onTermSubmit={()=>searchApi(term)}
       />
@@ -26,9 +26,18 @@ const HomeScreen=()=> {
         errorMessage?<Text>{errorMessage}</Text>:null
       }
       <ScrollView>
-      <ResultsList result={filterResultsByPrice('$')} title="Cost Effective"/>
-      <ResultsList result={filterResultsByPrice('$$')} title="Big Pricier"/>
-      <ResultsList result={filterResultsByPrice('$$$')} title="Big Spender"/>
+        <ResultsList
+          result={filterResultsByPrice('$')}
+          title="Cost Effective"
+        />
+        <ResultsList
+          result={filterResultsByPrice('$$')}
+          title="Big Pricier"
+        />
+        <ResultsList
+          result={filterResultsByPrice('$$$')}
+          title="Big Spender"
+        />
       </ScrollView>
     </View>
   );
