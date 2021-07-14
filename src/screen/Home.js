@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React,{useState} from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import useResult from '../hooks/useResult';
 import ResultsList from '../components/ResultsList';
@@ -16,7 +16,7 @@ const HomeScreen=()=> {
     });
   };
   return (
-    <View>
+    <View style={styles.contain}>
       <SearchBar 
         term={term} 
         onTermChange={newTerm=>setTerm(newTerm)}
@@ -25,14 +25,20 @@ const HomeScreen=()=> {
       {
         errorMessage?<Text>{errorMessage}</Text>:null
       }
-      <Text>We have found {result.length} results.</Text>
+      <ScrollView>
       <ResultsList result={filterResultsByPrice('$')} title="Cost Effective"/>
       <ResultsList result={filterResultsByPrice('$$')} title="Big Pricier"/>
       <ResultsList result={filterResultsByPrice('$$$')} title="Big Spender"/>
+      </ScrollView>
     </View>
   );
 }
 
-const style=StyleSheet.create({});
+const styles=StyleSheet.create({
+  contain:{
+    flex:1,
+    backgroundColor:'#FAFAFA'
+  }
+});
 
 export default HomeScreen;

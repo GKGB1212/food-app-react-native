@@ -11,7 +11,16 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Business Search" component={HomeScreen} />
+        <Stack.Screen 
+          name="Business Search" 
+          component={HomeScreen} 
+          options={{
+            headerStyle:{
+              backgroundColor: '#FF6262',
+            },
+            headerTintColor: '#fff'
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

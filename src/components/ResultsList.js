@@ -1,24 +1,31 @@
 import React from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
+import ResultsDetail from './ResultsDetail';
 
 const ResultsList=({title, result})=>{
-    return <View>
+    return <View style={styles.contain}>
         <Text style={styles.title}>{title}</Text>
         <FlatList
             horizontal
+            showsHorizontalScrollIndicator={false}
             data={result}
             keyExtractor={(result)=>result.id}
             renderItem={({item})=>{
-                return <Text>{item.name}</Text>
+                return <ResultsDetail result={item} />;
             }}
         />
     </View>
 };
 
 const styles=StyleSheet.create({
+    contain:{
+        marginBottom:10
+    },
     title:{
-        fontSize:30,
-        fontWeight:'bold'
+        fontSize:20,
+        fontWeight:'bold',
+        marginLeft:15,
+        marginBottom:5
     }
 });
 
